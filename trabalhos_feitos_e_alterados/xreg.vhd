@@ -1,8 +1,8 @@
 --#########################################################
 --#* Referente ao Trab V: Banco de Registradores do RISC-V  
 --#*                                              			   
---#* João Pedro de Oliveira Silva  		      190057807          
---#* Gabriel Ritter Domingues dos Santos      190067543                     
+--#* João Pedro de Oliveira Silva               190057807          
+--#* Gabriel Ritter Domingues dos Santos        190067543                     
 --#*                                              
 --#########################################################
 
