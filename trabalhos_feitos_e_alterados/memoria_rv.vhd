@@ -1,8 +1,8 @@
 --#########################################################
 --#* Referente ao Trab VII: Memória RiscV   
 --#*                                              			   
---#* João Pedro de Oliveira Silva  		      190057807          
---#* Gabriel Ritter Domingues dos Santos      190067543                     
+--#* João Pedro de Oliveira Silva               190057807          
+--#* Gabriel Ritter Domingues dos Santos        190067543                     
 --#*                                              
 --#########################################################
 
