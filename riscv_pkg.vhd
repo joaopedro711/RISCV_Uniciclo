@@ -54,6 +54,7 @@ package riscv_pkg is
 	constant iSB3			: std_logic_vector(2 downto 0) := "000";
 	constant iSH3			: std_logic_vector(2 downto 0) := "001";
 	constant iSW3			: std_logic_vector(2 downto 0) := "010";
+	constant iSLTU			: std_logic_vector(2 downto 0) := "011";
 	
 	-- Campo funct7 / bit30	
 	constant iSUB7			: std_logic := '1';
