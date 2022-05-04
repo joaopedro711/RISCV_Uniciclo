@@ -60,6 +60,7 @@ end process;
 
 end arc_rom;
 
+--Arquitetura pra RAM
 architecture arc_ram of ram_rv is 
 	type ram_type is array (0 to (2**(address'length)-1)) of std_logic_vector(datain' range);
 	

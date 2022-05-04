@@ -1,3 +1,4 @@
+--Arquivo disponibilizado pelo professor
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
@@ -53,6 +54,7 @@ package riscv_pkg is
 	constant iSB3			: std_logic_vector(2 downto 0) := "000";
 	constant iSH3			: std_logic_vector(2 downto 0) := "001";
 	constant iSW3			: std_logic_vector(2 downto 0) := "010";
+	constant iSLTU			: std_logic_vector(2 downto 0) := "011";
 	
 	-- Campo funct7 / bit30	
 	constant iSUB7			: std_logic := '1';
@@ -78,6 +80,16 @@ package riscv_pkg is
 	
 	-- Aliases
 
+
+	-- Adcionado e feito
+	component pc is
+		port (
+		clk : in STD_LOGIC;
+		we : in STD_LOGIC;                              --Só pra deixar o processador real, não tem no riscV
+		addr_in : in std_logic_vector(WORD_SIZE - 1 downto 0);
+		addr_out : OUT std_logic_vector(WORD_SIZE - 1 downto 0));
+	end component;
+
 	component rv_uniciclo is
 	port 
 	(
@@ -102,17 +114,17 @@ package riscv_pkg is
 	);
 	end component; 
 	
-	component mux_2 is
-	generic (
-		SIZE : natural := 32
+	-- Alterado e Feito
+	component mux2p1 is
+		port (
+			   sel : in  std_logic;
+			   A   : in  std_logic_vector((WORD_SIZE-1 downto 0);
+			   B   : in  std_logic_vector((WORD_SIZE-1 downto 0);
+			   X   : out std_logic_vector((WORD_SIZE-1 downto 0)
 	);
-	port (	
-		in0, in1	: in std_logic_vector(SIZE-1 downto 0);
-		sel		: in std_logic;
-		m_out		: out std_logic_vector(SIZE-1 downto 0)
-	);
-	end component;
+	end component; 
 
+	-- Alteraso e Feito
 	component adder is
 	generic (
 		DATA_WIDTH : natural := WORD_SIZE
@@ -133,12 +145,13 @@ package riscv_pkg is
 			Q 			: out STD_LOGIC_VECTOR(WIDTH-1 downto 0));
 	end component;
 
+	--feito
 	component ula is
 	port (
-		aluctl: 	in  std_logic_vector(3 downto 0);
-		A, B:		in  std_logic_vector(WORD_SIZE-1 downto 0);
-		aluout:	out std_logic_vector(WORD_SIZE-1 downto 0);
-		zero:		out std_logic
+		  opcode : in std_logic_vector(3 downto 0);
+          A, B : in std_logic_vector(WORD_SIZE -1 downto 0);
+          Z : out std_logic_vector(WORD_SIZE -1 downto 0);
+          zero : out std_logic
 		);
 	end component;
 	
@@ -184,65 +197,34 @@ package riscv_pkg is
 		alu_src,
 		breg_wr:	out std_logic
 		);
-end component;
+	end component;
 
-component genImm32 is
-	port (
-		instr	: in std_logic_vector(WORD_SIZE - 1 downto 0);
-		imm32 : out std_logic_vector(WORD_SIZE-1 downto 0)
+	component genImm32 is
+		port (
+			instr	: in std_logic_vector(WORD_SIZE - 1 downto 0);
+			imm32 : out std_logic_vector(WORD_SIZE-1 downto 0)
+			);
+	end component;
+
+	component data_mem is
+		port
+		(
+			address	: IN STD_LOGIC_VECTOR (7 DOWNTO 0);
+			clock		: IN STD_LOGIC;
+			data		: IN STD_LOGIC_VECTOR ((WORD_SIZE-1 DOWNTO 0);
+			wren		: IN STD_LOGIC ;
+			q			: OUT STD_LOGIC_VECTOR ((WORD_SIZE-1 DOWNTO 0)
 		);
-end component;
+	end component;
 
-component data_mem is
-	port
-	(
-		address	: IN STD_LOGIC_VECTOR (7 DOWNTO 0);
-		clock		: IN STD_LOGIC;
-		data		: IN STD_LOGIC_VECTOR (31 DOWNTO 0);
-		wren		: IN STD_LOGIC ;
-		q			: OUT STD_LOGIC_VECTOR (31 DOWNTO 0)
-	);
-end component;
+	component clk_div is
+		port
+		(
+			clk	  : in std_logic;
+			clk64   : out std_logic
+		);
 
-component clk_div is
-	port
-	(
-		clk	  : in std_logic;
-		clk64   : out std_logic
-	);
-
-end component;
-	
---	procedure mux2x1 (signal x0, x1	: in std_logic_vector(WORD_SIZE-1 downto 0); 
---							signal sel	: in std_logic;
---							signal z 	: out std_logic_vector(WORD_SIZE-1 downto 0) );
-	
+	end component;
 	
 end riscv_pkg;
 
-
-package body riscv_pkg is
-
-	-- Type Declaration (optional)
-
-	-- Subtype Declaration (optional)
-
-	-- Constant Declaration (optional)
-
-	-- Function Declaration (optional)
-
-	-- Function Body (optional)
-
-	-- Procedures
-	procedure mux2x1 (signal x0, x1	: in std_logic_vector(WORD_SIZE-1 downto 0); 
-							signal sel		: in std_logic;
-							signal z 		: out std_logic_vector(WORD_SIZE-1 downto 0) ) is
-	begin	
-		if (sel = '1') then	
-			z <= x1;
-		else	
-			z <= x0;
-		end if;
-	end procedure;
-
-end riscv_pkg;
