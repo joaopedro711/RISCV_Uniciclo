@@ -8,10 +8,9 @@
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
+use std.textio.all;
 
-entity testb_uniciclo is
-  -- Generics
-end testb_uniciclo;
+entity testb_uniciclo is end;
 
 architecture testbench of testb_uniciclo is
     component rv_uniciclo is
@@ -19,18 +18,24 @@ architecture testbench of testb_uniciclo is
             clk			: in std_logic;
             clk_rom		: in std_logic;
             rst	   		: in std_logic;
-            data  		: out std_logic_vector(WORD_SIZE-1 downto 0)
+            data  		: out std_logic_vector(31 downto 0)
         );
     end component;
 
   -- signal
-begin
-  module: ent port map(
-    -- port map
-    );
+  signal clk :std_logic;
+  signal clk_rom :std_logic;
 
-  test_handler: process
-  begin
-    -- statements
-  end process;
+    begin
+        project: rv_uniciclo port map(clk => clk, clk_rom => clk_rom);
+    process
+        begin
+        clk <= '0';
+        clk_rom <= '0';
+        wait for 100 ns;
+        clk <= '1';
+        clk_rom <= '1';
+        wait for 100 ns;
+    end process;
+    
 end testbench;
