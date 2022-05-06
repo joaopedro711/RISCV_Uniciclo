@@ -8,6 +8,7 @@
 library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
+library work;
 use work.riscv_pkg.all;             -- Pra usar as constantes do arquivo riscv_pkg.vhd
 
 entity control is
