@@ -124,14 +124,14 @@ package riscv_pkg is
 	);
 	end component; 
 
-	-- Alteraso e Feito
+	-- Alterado e Feito
 	component adder is
 	generic (
 		DATA_WIDTH : natural := WORD_SIZE
 	);
 	port (
-		a	 : in std_logic_vector ((DATA_WIDTH-1) downto 0);
-		b	 : in std_logic_vector ((DATA_WIDTH-1) downto 0);
+		A	 : in std_logic_vector ((DATA_WIDTH-1) downto 0);
+		B	 : in std_logic_vector ((DATA_WIDTH-1) downto 0);
 		res : out std_logic_vector ((DATA_WIDTH-1) downto 0)
 	);
 	end component;
@@ -155,26 +155,18 @@ package riscv_pkg is
 		);
 	end component;
 	
-	component xreg is
-	generic (
-		SIZE : natural := WORD_SIZE;
-		ADDR : natural := BREG_IDX
-	);
-	port 
-	(
-		clk		: in  std_logic;
-		wren  	: in  std_logic;
-		rs1		: in  std_logic_vector(ADDR-1 downto 0);
-		rs2		: in  std_logic_vector(ADDR-1 downto 0);
-		rd			: in  std_logic_vector(ADDR-1 downto 0);
-		data_in	: in  std_logic_vector(SIZE-1 downto 0);
-		A 			: out std_logic_vector(SIZE-1 downto 0);
-		B	 		: out std_logic_vector(SIZE-1 downto 0)
-	);
-
-	end component;
+	--Alterado e Feito
+	component XREGS is									-- Função fornecida pelo professor
+	generic (WSIZE : natural := 32);				-- tamanho do vetor
+	port (
+		  clk, wren, rst  : in std_logic;
+		  rs1, rs2, rd    : in std_logic_vector(4 downto 0);
+		  data            : in std_logic_vector(WSIZE-1 downto 0);
+		  ro1, ro2        : out std_logic_vector(WSIZE-1 downto 0)
+	  );
+  	end component;
 	
-	
+	-- Feito
 	component alu_ctr is
 	port (
 		op_alu		: in std_logic_vector(1 downto 0);
@@ -209,6 +201,14 @@ package riscv_pkg is
 			instr	: in std_logic_vector(WORD_SIZE - 1 downto 0);
 			imm32 : out std_logic_vector(WORD_SIZE-1 downto 0)
 			);
+	end component;
+
+	--Adcionado e feito
+	component rom_rv is 
+	port (
+		address : in std_logic_vector(11 downto 0);
+		dataout : out std_logic_vector(31 downto 0)
+ 	);
 	end component;
 
 	--Alterado e feito

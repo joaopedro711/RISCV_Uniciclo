@@ -11,8 +11,8 @@ use ieee.numeric_std.all;
 
 entity adder is
     port ( 
-        a : in  std_logic_vector(31 downto 0);
-        b : in  std_logic_vector(31 downto 0);
+        A : in  std_logic_vector(31 downto 0);
+        B : in  std_logic_vector(31 downto 0);
         res : out  std_logic_vector(31 downto 0)
     );
 end adder;
