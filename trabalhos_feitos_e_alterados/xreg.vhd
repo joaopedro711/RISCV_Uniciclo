@@ -22,9 +22,11 @@ end XREGS;
 
 architecture trab5 of XREGS is
 
-type regs is array (31 downto 0) of std_logic_vector (31 downto 0);
+type regs is array (0 to 31) of std_logic_vector (31 downto 0);
 
-signal registradores :regs;
+signal registradores :regs:=(others => (others => '0'));
+
+signal tgr : std_logic := '0';
 
 	begin
     process(clk)
@@ -34,17 +36,33 @@ signal registradores :regs;
                 for I in 0 to 31 loop
 					registradores(I) <= X"00000000";
 				end loop;
+            end if;
 
-            elsif wren = '1' then
-                if to_integer(unsigned(rd)) /= 0 then
-                    registradores(to_integer(unsigned(rd))) <= data;
-                end if;
+            if wren = '1' then
+                registradores(to_integer(unsigned(rd))) <= data;
+            end if;
 
-            else
-                ro1 <= registradores(to_integer(unsigned(rs1)));
-                ro2 <= registradores(to_integer(unsigned(rs2)));
-             end if;
-			 registradores(0) <= X"00000000";
+            tgr <= not tgr after 2 ns;
+
         end if;
+    end process;
+
+    process(registradores, tgr)
+    begin
+        case( rs1 ) is
+        
+            when "00000" => ro1 <= std_logic_vector(to_signed(0, 32));
+            when "UUUUU" => ro1 <= std_logic_vector(to_signed(0, 32));                
+        
+            when others => ro1 <= registradores(to_integer(unsigned(rs1)));        
+        end case ;
+
+        case( rs2 ) is
+        
+            when "00000" => ro2 <= std_logic_vector(to_signed(0, 32));
+            when "UUUUU" => ro2 <= std_logic_vector(to_signed(0, 32));                
+        
+            when others => ro2 <= registradores(to_integer(unsigned(rs2)));          
+        end case ;
     end process;
 end trab5;
