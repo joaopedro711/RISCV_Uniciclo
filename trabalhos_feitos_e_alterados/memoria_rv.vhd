@@ -65,7 +65,7 @@ architecture arc_ram of ram_rv is
 	type ram_type is array (0 to (2**(address'length)-1)) of std_logic_vector(datain' range);
 	
 	impure function init_ram return ram_type is
-		file text_file: text open read_mode is "testeRAM.txt";
+		file text_file: text open read_mode is "testRAM.txt";
 		variable text_line: line;
 		variable ram_content: ram_type;
 		
