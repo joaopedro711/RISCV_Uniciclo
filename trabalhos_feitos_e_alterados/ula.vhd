@@ -25,110 +25,92 @@ begin
     process(opcode, A, B, Z, zero)
     begin
         case opcode is
-
             -- ADD 
             when "0000" =>
-            Z <= std_logic_vector(signed(A) + signed(B));
-			zero <= '0';
+            Z <= std_logic_vector(signed(A) + signed(B));			
 
             -- SUB
             when "0001" =>
-            Z <= std_logic_vector(signed(A) - signed(B));
-			zero <= '0';
+            Z <= std_logic_vector(signed(A) - signed(B));			
 
             -- AND
             when "0010" =>
-            Z <= A AND B;
-			zero <= '0';
+            Z <= A AND B;			
 			
             -- OR
             when "0011" =>
-            Z <= A OR B;
-			zero <= '0';
+            Z <= A OR B;			
 
             -- XOR
             when "0100" =>
-            Z <= A XOR B;
-			zero <= '0';
+            Z <= A XOR B;			
 
             -- SLL
             when "0101" =>
-            Z <= std_logic_vector(shift_left(unsigned(A), to_integer(unsigned(B))));
-			zero <= '0';
+            Z <= std_logic_vector(shift_left(unsigned(A), to_integer(unsigned(B))));			
 
             -- SRL
             when "0110" =>
-            Z <=  std_logic_vector(shift_right(unsigned(A), to_integer(unsigned(B))));
-			zero <= '0';
+            Z <=  std_logic_vector(shift_right(unsigned(A), to_integer(unsigned(B))));			
 
             -- SRA
             when "0111" =>
-            Z <=  std_logic_vector(shift_right(signed(A), to_integer(unsigned(B))));
-			zero <= '0';
+            Z <=  std_logic_vector(shift_right(signed(A), to_integer(unsigned(B))));			
 
             -- SLT
             when "1000" =>
             if signed(A) < signed(B) then
-                Z <= x"00000001";
-				zero <= '1';
+                Z <= x"00000001";				
 			else
-				Z <= x"00000000";
-				zero <= '0';
+				Z <= x"00000000";				
             end if;
 
             -- SLTU
             when "1001" =>
             if unsigned(A) < unsigned(B) then
-                Z <= x"00000001";
-				zero <= '1';
+                Z <= x"00000001";				
 			else
-				Z <= x"00000000";
-				zero <= '0';
+				Z <= x"00000000";			
             end if;
 			
             -- SGE
             when "1010" =>
             if signed(A) >= signed(B) then
                 Z <= x"00000001";
-				zero <= '1';
 			else
 				Z <= x"00000000";
-				zero <= '0';
             end if;
 
             -- SGEU
             when "1011" =>
             if unsigned(A) >= unsigned(B) then
                 Z <= x"00000001";
-				zero <= '1';
 			else
 				Z <= x"00000000";
-				zero <= '0';
             end if;
 
             -- SEQ
             when "1100" =>
             if A = B then
                 Z <= x"00000001";
-				zero <= '1';
 			else
 				Z <= x"00000000";
-				zero <= '0';
             end if;
 
             -- SNE
             when "1101" =>
             if A /= B then
                 Z <= x"00000001";
-				zero <= '1';
 			else
 				Z <= x"00000000";
-				zero <= '0';
             end if;
 
             when others => 
 				Z <= "00000000000000000000000000000000";
-				zero <= '0';
+                
         end case;
+    
+	    if (Z = X"00000000") then zero <= '1'; else zero <= '0'; end if; -- sinal Zero
+    
     end process;
 end trab6;
