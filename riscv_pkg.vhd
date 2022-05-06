@@ -184,19 +184,23 @@ package riscv_pkg is
 	);
 	end component;
 	
+	-- Alterado e Feito
 	component control is
 	port (
-		opcode : in std_logic_vector(5 downto 0);
+		opcode : in std_logic_vector(6 downto 0);
 		op_ula :	out std_logic_vector(1 downto 0);
 		reg_dst,
-		branch,
-		is_bne,
-		jump,
+		branch,				
 		mem2reg,
+		mem_read,
 		mem_wr,
 		alu_src,
+		lui,
+		auipc,
+		jal,		
+		jalr,
 		breg_wr:	out std_logic
-		);
+	);
 	end component;
 
 	component genImm32 is
