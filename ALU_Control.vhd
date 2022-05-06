@@ -15,8 +15,8 @@ entity alu_ctr is
 	port (
 		op_alu		: in std_logic_vector(1 downto 0);
 		funct3		: in std_logic_vector(2 downto 0);
-		funct7		: in std_logic;
-		alu_ctr	   : out std_logic_vector(3 downto 0)
+		funct7      : in std_logic_vector(6 downto 0);
+		alu_ctr	    : out std_logic_vector(3 downto 0)
 	);
 end entity alu_ctr;
 
@@ -52,7 +52,7 @@ architecture arc_alu_control of alu_ctr is
                 when "10" => -- R Type
                   
                     if funct3 = (iADDSUB3 or iADD3)  then --ADD ou SUB
-                        if funct7 = (iSUB7 or iSRA7 or iSRAI7) then --SUB
+                        if funct7(5) = (iSUB7 or iSRA7 or iSRAI7) then --SUB
                             alu_ctr <= ULA_SUB; --SUB
                         else
                             alu_ctr <= ULA_ADD; --ADD
@@ -76,7 +76,7 @@ architecture arc_alu_control of alu_ctr is
                     end if;
                     
                     if funct3 = (iSR3 or iSRI3) then --SRL ou SRA
-                        if funct7 = (iSUB7 or iSRA7 or iSRAI7) then 
+                        if funct7(5) = (iSUB7 or iSRA7 or iSRAI7) then 
                             alu_ctr <= ULA_SRA; --SRA
                         else
                             alu_ctr <= ULA_SRL; --SRL
@@ -115,7 +115,7 @@ architecture arc_alu_control of alu_ctr is
                     end if;
                     
                     if funct3 = (iSR3 or iSRI3) then --SRLi ou SRAi
-                        if funct7 = (iSUB7 or iSRA7 or iSRAI7) then --SRAi
+                        if funct7(5) = (iSUB7 or iSRA7 or iSRAI7) then --SRAi
                         alu_ctr <= ULA_SRA; --SRAi
                         else
                         alu_ctr <= ULA_SRL; --SRLi

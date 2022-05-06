@@ -146,7 +146,7 @@ package riscv_pkg is
 	end component;
 
 	--feito
-	component ula is
+	component ulaRV is
 	port (
 		  opcode : in std_logic_vector(3 downto 0);
           A, B : in std_logic_vector(WORD_SIZE -1 downto 0);
@@ -203,6 +203,7 @@ package riscv_pkg is
 	);
 	end component;
 
+	--Feito
 	component genImm32 is
 		port (
 			instr	: in std_logic_vector(WORD_SIZE - 1 downto 0);
@@ -210,14 +211,15 @@ package riscv_pkg is
 			);
 	end component;
 
-	component data_mem is
+	--Alterado e feito
+	component ram_rv is
 		port
 		(
 			address	: IN STD_LOGIC_VECTOR (7 DOWNTO 0);
 			clock		: IN STD_LOGIC;
-			data		: IN STD_LOGIC_VECTOR ((WORD_SIZE-1 DOWNTO 0);
-			wren		: IN STD_LOGIC ;
-			q			: OUT STD_LOGIC_VECTOR ((WORD_SIZE-1 DOWNTO 0)
+			datain		: IN STD_LOGIC_VECTOR ((WORD_SIZE-1 DOWNTO 0);
+			we		: IN STD_LOGIC ;
+			dataout			: OUT STD_LOGIC_VECTOR ((WORD_SIZE-1 DOWNTO 0)
 		);
 	end component;
 
