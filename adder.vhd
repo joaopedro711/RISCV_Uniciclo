@@ -20,6 +20,6 @@ end adder;
 architecture arc_somador of adder is
 begin
 
-    result <= std_logic_vector(signed(a) + signed(b));
+    res <= std_logic_vector(signed(a) + signed(b));
 
 end arc_somador;
