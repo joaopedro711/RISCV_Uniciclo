@@ -9,6 +9,7 @@
 library IEEE;
 use IEEE.std_logic_1164.all;
 use ieee.numeric_std.all;
+use std.textio.all;
 
 -- Fornecido pelo professor
 entity rom_rv is 
@@ -25,7 +26,7 @@ architecture arc_rom of rom_rv is
 	type rom_type is array (0 to (2**(address'length)-1)) of std_logic_vector(dataout' range);
 	
 	impure function init_rom return rom_type is
-		file text_file: text open read_mode is "testROM.txt";    -- arquivo hexadecimal pra rom_rv
+		file text_file: text open read_mode is "C:\Users\Particular\Documents\GitHub\RISCV_Uniciclo\trabalhos_feitos_e_alterados\testROM.txt";    -- arquivo hexadecimal pra rom_rv
 		variable text_line: line;
 		variable rom_content: rom_type;
 		

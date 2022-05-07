@@ -12,16 +12,16 @@ library work;
 use work.riscv_pkg.all;             -- Pra usar as constantes do arquivo riscv_pkg.vhd
 
 
-entity alu_ctr is
+entity alu_controle is
 	port (
 		op_alu		: in std_logic_vector(1 downto 0);
 		funct3		: in std_logic_vector(2 downto 0);
 		funct7      : in std_logic_vector(6 downto 0);
 		alu_ctr	    : out std_logic_vector(3 downto 0)
 	);
-end entity alu_ctr;
+end entity alu_controle;
 
-architecture arc_alu_control of alu_ctr is
+architecture arc_alu_control of alu_controle is
     begin
         process (op_alu, funct3, funct7, alu_ctr)
         

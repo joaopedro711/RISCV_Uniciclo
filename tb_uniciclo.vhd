@@ -25,11 +25,13 @@ architecture testbench of testb_uniciclo is
   -- signal
   signal clk :std_logic;
   signal clk_rom :std_logic;
+  signal rst : std_logic;
 
     begin
-        project: rv_uniciclo port map(clk => clk, clk_rom => clk_rom);
+        project: rv_uniciclo port map(clk => clk, clk_rom => clk_rom, rst => rst);
     process
         begin
+        rst <= '0';
         clk <= '0';
         clk_rom <= '0';
         wait for 100 ns;

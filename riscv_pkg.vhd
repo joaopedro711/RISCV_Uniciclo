@@ -107,9 +107,9 @@ package riscv_pkg is
 		DATA_WIDTH : natural := WORD_SIZE
 	);
 	port (
-		a	 : in std_logic_vector ((DATA_WIDTH-1) downto 0);
-		b	 : in std_logic_vector ((DATA_WIDTH-1) downto 0);
-		res : out std_logic_vector ((DATA_WIDTH-1) downto 0)
+		a	 : in std_logic_vector (DATA_WIDTH-1 downto 0);
+		b	 : in std_logic_vector (DATA_WIDTH-1 downto 0);
+		res : out std_logic_vector (DATA_WIDTH-1 downto 0)
 	);
 	end component;
 	
@@ -176,7 +176,7 @@ package riscv_pkg is
 	component ram_rv is
 		port
 		(
-			address	: IN STD_LOGIC_VECTOR (7 DOWNTO 0);
+			address	: IN STD_LOGIC_VECTOR (11 DOWNTO 0);
 			clock		: IN STD_LOGIC;
 			datain		: IN STD_LOGIC_VECTOR (WORD_SIZE-1 DOWNTO 0);
 			we		: IN STD_LOGIC ;

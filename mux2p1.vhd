@@ -13,8 +13,9 @@ entity mux2p1 is
 end mux2p1;
 
 architecture arc_mux2p1 of mux2p1 is
-    process(sel, A, B, X)
     begin
+    process(sel, A, B, X)
+        begin
         case sel is
             when '0' =>
             X <= A;

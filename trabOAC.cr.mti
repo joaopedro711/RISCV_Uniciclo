@@ -1,0 +1,7 @@
+C:/Users/Particular/Documents/GitHub/RISCV_Uniciclo/riscv_pkg.vhd {0 {vcom -work work -2008 -stats=none {C:\Users\Particular\Documents\GitHub\RISCV_Uniciclo\riscv_pkg.vhd}
+** Warning: (vcom-14) Failed to open "C:/Users/Particular/Documents/GitHub/RISCV_Uniciclo/trabOAC.mpf" specified by the MODELSIM environment variable.
+No such file or directory. (errno = ENOENT)
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+** Error: (vcom-66) Execution of vlib.exe failed. Please check the error log for more details.
+
+} {5.0 6.0} {}}

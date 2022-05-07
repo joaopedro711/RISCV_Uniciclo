@@ -21,8 +21,7 @@ end entity pc;
 
 architecture arc_pc of pc is
 
-begin
-
+    begin
     process (clk, we) begin
         if rising_edge(clk) then
             if we = '1' then    

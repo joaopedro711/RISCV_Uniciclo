@@ -81,7 +81,7 @@ architecture projeto of rv_uniciclo is
     -- As etapas correspondem ao caminho no projeto.
     begin
         PC_init: pc port map(
-            clock => clock,
+            clk => clk,
             we => '1',
             addr_in => PC_dataIn,
             addr_out => endere_instruction
@@ -110,7 +110,7 @@ architecture projeto of rv_uniciclo is
         );
     
         Registers: XREGS port map (
-            clock => clock,
+            clk => clk,
             wren => regWrite,
             rst => reset,
             rs1 => instruction(19 downto 15), -- bits referentes a rs1
@@ -138,7 +138,7 @@ architecture projeto of rv_uniciclo is
         );
         
         -- Controle da Ula
-        Alu_Control: alu_ctr port map ( 
+        Alu_Control: alu_controle port map ( 
             op_alu => ALUop,                                   --ALUop é a saída do Control
             funct3 => instruction(14 downto 12),               -- intrução do 14 ao 12 é funct 3
             funct7 => instruction(WORD_SIZE-1 downto 25),      -- intrução do 31 ao 25 é funct7
@@ -156,9 +156,9 @@ architecture projeto of rv_uniciclo is
         
         -- Memoria de dados
         Data_Memory: ram_rv port map (
-            clock => clock,
+            clock => clk,
             we => memWrite,                            -- sinal que sai do controle
-            address => ULAResult,
+            address => ULAResult(11 downto 0),
             datain => s_rs2,                           -- saída 2 do Registers
             dataout => D_memory_out                    -- saída da memória de dados 
         );
