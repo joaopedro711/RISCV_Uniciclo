@@ -22,7 +22,7 @@ package riscv_pkg is
 	constant iSType			: std_logic_vector(6 downto 0) := "0100011";
 	constant iBType			: std_logic_vector(6 downto 0) := "1100011";
 	constant iIType			: std_logic_vector(6 downto 0) := "0010011";
-	constant iLUI			: std_logic_vector(5 downto 0) := "0110111";
+	constant iLUI			: std_logic_vector(6 downto 0) := "0110111";
 	constant iAUIPC			: std_logic_vector(6 downto 0) := "0010111";
 	constant iJALR			: std_logic_vector(6 downto 0) := "1100111";
 	constant iJAL			: std_logic_vector(6 downto 0) := "1101111";
@@ -90,37 +90,14 @@ package riscv_pkg is
 		addr_out : OUT std_logic_vector(WORD_SIZE - 1 downto 0));
 	end component;
 
-	component rv_uniciclo is
-	port 
-	(
-		clk			: in std_logic;
-		clk_rom		: in std_logic;
-		rst	   		: in std_logic;
-		data  		: out std_logic_vector(WORD_SIZE-1 downto 0)
-	);
-	end component;
-	
-	component reg is
-	generic (
-		SIZE : natural := 32
-	);
-	port 
-	(
-		clk		: in std_logic;
-		wren		: in std_logic;
-		rst		: in std_logic;
-		d_in	   : in std_logic_vector(WORD_SIZE-1 downto 0);
-		d_out	: out std_logic_vector(WORD_SIZE-1 downto 0)
-	);
-	end component; 
 	
 	-- Alterado e Feito
 	component mux2p1 is
 		port (
 			   sel : in  std_logic;
-			   A   : in  std_logic_vector((WORD_SIZE-1 downto 0);
-			   B   : in  std_logic_vector((WORD_SIZE-1 downto 0);
-			   X   : out std_logic_vector((WORD_SIZE-1 downto 0)
+			   A   : in  std_logic_vector(WORD_SIZE-1 downto 0);
+			   B   : in  std_logic_vector(WORD_SIZE-1 downto 0);
+			   X   : out std_logic_vector(WORD_SIZE-1 downto 0)
 	);
 	end component; 
 
@@ -130,20 +107,12 @@ package riscv_pkg is
 		DATA_WIDTH : natural := WORD_SIZE
 	);
 	port (
-		A	 : in std_logic_vector ((DATA_WIDTH-1) downto 0);
-		B	 : in std_logic_vector ((DATA_WIDTH-1) downto 0);
+		a	 : in std_logic_vector ((DATA_WIDTH-1) downto 0);
+		b	 : in std_logic_vector ((DATA_WIDTH-1) downto 0);
 		res : out std_logic_vector ((DATA_WIDTH-1) downto 0)
 	);
 	end component;
 	
-	component memInstr is
-	generic (
-		WIDTH : natural := WORD_SIZE;
-		WADDR : natural := 8);
-	port (ADDRESS  : in STD_LOGIC_VECTOR (WADDR-1 downto 0);
-			clk		: in std_logic;
-			Q 			: out STD_LOGIC_VECTOR(WIDTH-1 downto 0));
-	end component;
 
 	--feito
 	component ulaRV is
@@ -155,23 +124,23 @@ package riscv_pkg is
 		);
 	end component;
 	
-	--Alterado e Feito
+	-- ALterado e feito
 	component XREGS is									-- Função fornecida pelo professor
-	generic (WSIZE : natural := 32);				-- tamanho do vetor
-	port (
-		  clk, wren, rst  : in std_logic;
-		  rs1, rs2, rd    : in std_logic_vector(4 downto 0);
-		  data            : in std_logic_vector(WSIZE-1 downto 0);
-		  ro1, ro2        : out std_logic_vector(WSIZE-1 downto 0)
-	  );
-  	end component;
+  	generic (WSIZE : natural := 32);				-- tamanho do vetor
+  	port (
+        clk, wren, rst  : in std_logic;
+        rs1, rs2, rd    : in std_logic_vector(4 downto 0);
+        data            : in std_logic_vector(WSIZE-1 downto 0);
+        ro1, ro2        : out std_logic_vector(WSIZE-1 downto 0)
+    );
+	end component;
 	
-	-- Feito
-	component alu_ctr is
+	-- Alterado e Feito
+	component alu_controle is
 	port (
 		op_alu		: in std_logic_vector(1 downto 0);
 		funct3		: in std_logic_vector(2 downto 0);
-		funct7		: in std_logic;
+		funct7		: in std_logic_vector(6 downto 0);
 		alu_ctr	   : out std_logic_vector(3 downto 0)
 	);
 	end component;
@@ -203,33 +172,24 @@ package riscv_pkg is
 			);
 	end component;
 
-	--Adcionado e feito
-	component rom_rv is 
-	port (
-		address : in std_logic_vector(11 downto 0);
-		dataout : out std_logic_vector(31 downto 0)
- 	);
-	end component;
-
 	--Alterado e feito
 	component ram_rv is
 		port
 		(
 			address	: IN STD_LOGIC_VECTOR (7 DOWNTO 0);
 			clock		: IN STD_LOGIC;
-			datain		: IN STD_LOGIC_VECTOR ((WORD_SIZE-1 DOWNTO 0);
+			datain		: IN STD_LOGIC_VECTOR (WORD_SIZE-1 DOWNTO 0);
 			we		: IN STD_LOGIC ;
-			dataout			: OUT STD_LOGIC_VECTOR ((WORD_SIZE-1 DOWNTO 0)
+			dataout			: OUT STD_LOGIC_VECTOR (WORD_SIZE-1 DOWNTO 0)
 		);
 	end component;
 
-	component clk_div is
-		port
-		(
-			clk	  : in std_logic;
-			clk64   : out std_logic
-		);
-
+	--Adcionado e Feito
+	component rom_rv is 
+ 	port (
+		address : in std_logic_vector(11 downto 0);
+		dataout : out std_logic_vector(31 downto 0)
+	);
 	end component;
 	
 end riscv_pkg;
