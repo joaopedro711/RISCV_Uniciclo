@@ -1,5 +1,5 @@
 --#########################################################
---#* Referente ao Trab IV: Geração de Dados Imm32 no RISC-V    
+--#* Referente ao Trab IV: Geração de Dados Imm32 no RISC-V     
 --#*                                              			   
 --#* João Pedro de Oliveira Silva				190057807          
 --#* Gabriel Ritter Domingues dos Santos			190067543                     
