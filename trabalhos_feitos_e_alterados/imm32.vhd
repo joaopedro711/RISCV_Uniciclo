@@ -53,4 +53,5 @@ begin
   begin
     imm32 <= std_logic_vector(imm32s);
   end process output_proc; 
+
 end arq;
