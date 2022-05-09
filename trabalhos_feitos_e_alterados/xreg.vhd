@@ -24,7 +24,7 @@ architecture trab5 of XREGS is
 
 type regs is array (0 to 31) of std_logic_vector (31 downto 0);
 
-signal registradores :regs:=(others => (others => '0'));
+signal registradores :regs:= (others => (others => '0'));
 
 signal tgr : std_logic := '0';
 

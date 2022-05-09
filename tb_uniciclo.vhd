@@ -32,12 +32,14 @@ architecture testbench of testb_uniciclo is
     process
         begin
         rst <= '0';
-        clk <= '0';
-        clk_rom <= '0';
-        wait for 100 ns;
         clk <= '1';
         clk_rom <= '1';
         wait for 100 ns;
+	
+        clk <= '0';
+        clk_rom <= '0';
+        wait for 100 ns;
+
     end process;
     
 end testbench;

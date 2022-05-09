@@ -103,13 +103,10 @@ package riscv_pkg is
 
 	-- Alterado e Feito
 	component adder is
-	generic (
-		DATA_WIDTH : natural := WORD_SIZE
-	);
 	port (
-		a	 : in std_logic_vector (DATA_WIDTH-1 downto 0);
-		b	 : in std_logic_vector (DATA_WIDTH-1 downto 0);
-		res : out std_logic_vector (DATA_WIDTH-1 downto 0)
+		a	 : in std_logic_vector (31 downto 0);
+		b	 : in std_logic_vector (31 downto 0);
+		res : out std_logic_vector (31 downto 0)
 	);
 	end component;
 	
@@ -176,8 +173,9 @@ package riscv_pkg is
 	component ram_rv is
 		port
 		(
-			address	: IN STD_LOGIC_VECTOR (11 DOWNTO 0);
-			clock		: IN STD_LOGIC;
+			address	: IN STD_LOGIC_VECTOR (31 DOWNTO 0);
+			clk		: IN STD_LOGIC;
+			re	        : in std_logic;
 			datain		: IN STD_LOGIC_VECTOR (WORD_SIZE-1 DOWNTO 0);
 			we		: IN STD_LOGIC ;
 			dataout			: OUT STD_LOGIC_VECTOR (WORD_SIZE-1 DOWNTO 0)
@@ -187,6 +185,7 @@ package riscv_pkg is
 	--Adcionado e Feito
 	component rom_rv is 
  	port (
+		clk_rom	: in std_logic;
 		address : in std_logic_vector(11 downto 0);
 		dataout : out std_logic_vector(31 downto 0)
 	);

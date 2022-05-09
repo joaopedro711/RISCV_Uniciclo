@@ -88,6 +88,7 @@ architecture projeto of rv_uniciclo is
         );
     
         Intruction_Memory: rom_rv port map(
+            clk_rom => clk_rom,
             address => endere_instruction(11 downto 0), --(0000000000000000000xxxxxxxxxxxx)
             dataout => instruction                      -- recebe toda instrução e passará cada parte pra cada operação
         );
@@ -156,9 +157,10 @@ architecture projeto of rv_uniciclo is
         
         -- Memoria de dados
         Data_Memory: ram_rv port map (
-            clock => clk,
+            clk => clk,
+            re => memRead,
             we => memWrite,                            -- sinal que sai do controle
-            address => ULAResult(11 downto 0),
+            address => ULAResult,
             datain => s_rs2,                           -- saída 2 do Registers
             dataout => D_memory_out                    -- saída da memória de dados 
         );

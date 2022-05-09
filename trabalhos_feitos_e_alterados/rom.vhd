@@ -11,9 +11,10 @@ use IEEE.std_logic_1164.all;
 use ieee.numeric_std.all;
 use std.textio.all;
 
--- Fornecido pelo professor
+-- entidade fornecida pelo professor
 entity rom_rv is 
  port (
+	 clk_rom 	 : in std_logic;
 	 address : in std_logic_vector(11 downto 0);
 	 dataout : out std_logic_vector(31 downto 0)
  );
@@ -21,34 +22,43 @@ end entity rom_rv;
 
 
 
---Arquitetura pra ROM
-architecture arc_rom of rom_rv is 
-	type rom_type is array (0 to (2**(address'length)-1)) of std_logic_vector(dataout' range);
-	
-	impure function init_rom return rom_type is
-		file text_file: text open read_mode is "C:\Users\Particular\Documents\GitHub\RISCV_Uniciclo\trabalhos_feitos_e_alterados\testROM.txt";    -- arquivo hexadecimal pra rom_rv
-		variable text_line: line;
-		variable rom_content: rom_type;
-		
-		begin 
-			for i in 0 to (2**(address'length) - 1)  loop
-			if not endfile(text_file) then
-			 readline(text_file,text_line);
-			 hread(text_line,rom_content(i));
-			end if;
-			end loop;
-		return rom_content;
-	end function;	
-	
-	signal rom_rv: rom_type := init_rom;
-	signal s_addr : std_logic_vector(address' range);
-begin
-
-s_addr <= address;
-
-process (s_addr)
-begin
-	dataout <= rom_rv(to_integer(unsigned(s_addr)));
-end process;
-
-end arc_rom;
+--arquitetura da memoria de instrucoes (rom)
+architecture RTL of rom_rv is
+	Type rom_type is array (0 to 2**12-1) of std_logic_vector(31 downto 0);
+	signal mem : rom_type;
+	signal initialize : std_logic;
+	signal atraso : std_logic := '0';
+  begin
+	initialize <= '1';
+	init_proc: process(initialize) is
+	  -- funcao para iniciar a memoria de instrucoes com base no site disponibilizado pelo professor
+	  impure function init_memory return rom_type is
+		file rom_file : text open read_mode is "C:\Users\Particular\Desktop\RISCV_Uniciclo\trabalhos_feitos_e_alterados\testROM.txt";
+		variable text_line : line;
+		variable mem_content : rom_type;
+		variable i : integer := 0;
+	  begin
+		while not endfile(rom_file) loop
+		  readline(rom_file, text_line);
+		  hread(text_line, mem_content(i));
+		  i := i + 1;
+		end loop;
+	   
+		return mem_content;
+	  end function;
+	begin
+	  mem <= init_memory;
+	end process init_proc;
+  
+	process(clk_rom) is
+	begin
+	  if (rising_edge(clk_rom)) then
+		atraso <= not atraso after 1 ns; --atraso da saida de dados
+	  end if;
+	end process;
+	  
+	process(atraso)
+	begin
+	  dataout <= mem(to_integer(unsigned(address))/4);
+	end process;
+  end RTL;
