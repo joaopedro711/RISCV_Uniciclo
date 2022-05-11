@@ -27,7 +27,7 @@ architecture RTL of rom_rv is
 	Type rom_type is array (0 to 2**12-1) of std_logic_vector(31 downto 0);
 	signal mem : rom_type;
 	signal initialize : std_logic;
-	signal atraso : std_logic := '0';
+	signal atraso : std_logic := '0';--atraso da saida de dados -> importante para as simulacoes (nao tava funcionando sem ele)
   begin
 	initialize <= '1';
 	init_proc: process(initialize) is
@@ -53,7 +53,7 @@ architecture RTL of rom_rv is
 	process(clk_rom) is
 	begin
 	  if (rising_edge(clk_rom)) then
-		atraso <= not atraso after 1 ns; --atraso da saida de dados
+		atraso <= not atraso after 1 ns;
 	  end if;
 	end process;
 	  
