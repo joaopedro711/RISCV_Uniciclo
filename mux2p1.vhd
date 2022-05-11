@@ -1,4 +1,9 @@
 -- Multiplexador 2 para 1 de 32 bits
+-- Gabriel Ritter Domingues dos Santos        190067543
+-- João Pedro de Oliveira Silva               190057807
+
+-- Implementação de um mux 2 para 1 simples
+
 library IEEE;
 use IEEE.std_logic_1164.all;
 use ieee.numeric_std.all;
