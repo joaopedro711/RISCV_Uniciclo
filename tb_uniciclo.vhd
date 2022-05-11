@@ -1,5 +1,6 @@
 --#########################################################
---#* Testbench para o programa principal
+--#* Testbench simples (apenas com os clocks e o reset) para o programa principal
+--#* o reset foi testado e funcionou, porem nao utilizamos no resultado final do projeto
 --#*                                              			   
 --#* João Pedro de Oliveira Silva               190057807          
 --#* Gabriel Ritter Domingues dos Santos        190067543                     
@@ -17,8 +18,7 @@ architecture testbench of testb_uniciclo is
     port(
             clk			: in std_logic;
             clk_rom		: in std_logic;
-            rst	   		: in std_logic;
-            data  		: out std_logic_vector(31 downto 0)
+            rst	   		: in std_logic
         );
     end component;
 
