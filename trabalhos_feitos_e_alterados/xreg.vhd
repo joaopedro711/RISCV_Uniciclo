@@ -26,7 +26,7 @@ type regs is array (0 to 31) of std_logic_vector (31 downto 0);
 
 signal registradores :regs:= (others => (others => '0'));
 
-signal tgr : std_logic := '0';
+signal atraso : std_logic := '0'; --atraso importante para as simulacoes (nao tava funcionando sem ele)
 
 	begin
     process(clk)
@@ -42,12 +42,12 @@ signal tgr : std_logic := '0';
                 registradores(to_integer(unsigned(rd))) <= data;
             end if;
 
-            tgr <= not tgr after 2 ns;
+            atraso <= not atraso after 2 ns;
 
         end if;
     end process;
 
-    process(registradores, tgr)
+    process(registradores, atraso)
     begin
         case( rs1 ) is
         
