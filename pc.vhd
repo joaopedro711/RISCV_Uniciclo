@@ -1,7 +1,7 @@
 --#########################################################
 --#* PC    
 --#*                                              			   
---#* Jo�o Pedro de Oliveira Silva               190057807          
+--#* Joao Pedro de Oliveira Silva               190057807          
 --#* Gabriel Ritter Domingues dos Santos        190067543                     
 --#*                                              
 --#########################################################
@@ -14,7 +14,7 @@ library work;
 entity pc is
   port (
     clk : in STD_LOGIC;
-    we : in STD_LOGIC;                              --S� pra deixar o processador real, n�o tem no riscV
+    we : in STD_LOGIC;                              --serve para deixar a simulacao real, nao tem no riscV
     addr_in : in std_logic_vector(31 downto 0);
     addr_out : OUT std_logic_vector(31 downto 0));
 end entity pc;
