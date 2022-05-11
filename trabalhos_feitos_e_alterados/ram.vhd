@@ -27,12 +27,12 @@ end entity ram_rv;
 --arquitetura para a memoria ram
 architecture arc_ram of ram_rv is 
 Type ram_type is array (0 to 2**14-1) of std_logic_vector(31 downto 0);
-signal wre_ram, init_ram_aux : ram_type := (others => (others => '0'));
+signal wre_ram, init_ram_aux : ram_type := (others => (others => '0')); --sinais necessarios para manipulacao da ram
 
 type mem_addresses is array (0 to 2**12-1) of std_logic;
-signal written_addresses : mem_addresses := (others => '0');
-signal init_file : std_logic;
-signal atraso : std_logic := '0';
+signal written_addresses : mem_addresses := (others => '0'); --sinais necessarios para manipulacao dos enderecos
+signal init_file : std_logic; --sinal para ler o arquivo
+signal atraso : std_logic := '0'; --atraso da saida de dados -> importante para as simulacoes (nao tava funcionando sem ele)
 
 begin
 init_file <= '1';
@@ -50,7 +50,8 @@ init_proc: process(init_file) is
 
 	while not endfile(text_file) loop
 	  readline(text_file, text_line);
-	  -- O endereço base é 0x2000 = 8192. Mas como acessamos só palavras, a base é 8192/4 = 2048
+	  -- tendo em vista que sao acessadas as palavras apenas e foi pedido pelo professor que fossem de 12 bits
+	  -- eh valido pegar a partir de 2048.
 	  hread(text_line, mem_content(i + 2048));
 	  i := i + 1;
 	end loop;
@@ -68,9 +69,9 @@ root_proc: process(clk) is
 begin
   write_address := to_integer(unsigned(address(15 downto 0)))/4;
   if (rising_edge(clk)) then
-	-- Escrita não deve ser atrasada
+	-- Escrita nao pode ser atrasada
 	if we = '1' then
-	  report "wre_ram written" severity note;
+	  report "escrita realizada" severity note;
 	  wre_ram(write_address) <= datain;
 	  written_addresses(write_address) <= '1';
 	end if;
@@ -86,10 +87,10 @@ begin
 
   if re = '1' then
 	if written_addresses(result_address) = '1' then
-	  report "wre_ram read" severity note;
+	  report "leitura da ram - dado armazenado" severity note;
 	  dataout <= wre_ram(result_address);
 	else
-	  report "init_ram read" severity note;
+	  report "inicializacao da ram - dado armazenado" severity note;
 	  dataout <= init_ram_aux(result_address);
 	end if;
   else
